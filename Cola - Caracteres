@@ -1,0 +1,129 @@
+/*-------------------------------------
+FCA UNAM Informatica
+Castro Avila Oscar Daniel, Grupo:8391
+Programacion (Estruct. de datos)-1361
+Asesor: Rodriguez Reynoso Jessica
+Unidad 2 Actividad de aprendizaje 1.
+-------------------------------------*/
+//QUEUE enqueue, dequeue
+
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+//-------------------------
+struct colaNodo { 
+char nombre [10][20];  
+struct colaNodo *pSig; // queueNode pointer 
+}; 
+
+//-------------------------
+typedef struct colaNodo ColaNodo;
+typedef ColaNodo *pColaNodo;
+
+// prototipo de funciones-----------------------------
+void mostrar (pColaNodo pActual);
+int vacio(pColaNodo pHead);
+void enqueue(pColaNodo *pHead, pColaNodo *pTail, char nom[]);
+char dequeue(pColaNodo *pHead, pColaNodo *pTail);
+void opciones(void);
+
+//Funcion principal-------------------------------------
+int main(void){
+    pColaNodo pHead = NULL; // initialize headPtr
+    pColaNodo pTail = NULL; // initialize tailPtr
+    char obj = '\0'; // char input by user
+
+    opciones(); // se repetira mientras no se ingrese 3.
+    printf("%s", "\nDigita La Opcion: ");
+	int op = 0; 
+    scanf("%i", &op);
+
+while (op != 3){ 
+//Estructura switch-----------------------------------
+    switch(op){	
+	   case 1:
+		printf("%s","Ingresa un nombre: ");
+		gets(obj);//ingresar funcion strcpy
+		enqueue(&pHead, &pTail, obj);
+		mostrar(pHead);
+		break;
+		
+		case 2:
+			//Si la cola no esta vacia
+			if(!vacio(pHead)){
+				obj = dequeue(&pHead, &pTail);
+				printf("\n'%c salio.'\n",obj);
+			}
+		    mostrar(pHead);
+		break;
+		default:
+			puts("Opcion invalida");
+			opciones();
+			break;
+	}
+	printf("%s","\nDigita la opcion: ");scanf("%i",&op);
+}
+	puts("Ejecucion terminada.");	
+}
+		
+//Menu funciones--------------------------------------	
+void opciones (void) {
+	printf("\t   FUNCIONES\n\n"
+           "\t| 1. ENQUEUE |\n"
+           "\t| 2. DEQUEUE |\n"
+           "\t| 3. SALIR   |\n");	
+}
+//Funcion enqueue-------------------------------------------
+void enqueue(pColaNodo *pHead, pColaNodo *pTail, char nom[]) {
+	pColaNodo pNuevo = malloc(sizeof(ColaNodo));
+	
+	if (pNuevo != NULL){
+		pNuevo -> nombre = nom;
+		pNuevo -> pSig = NULL;
+		
+		if (vacio(*pHead)){
+			*pHead = pNuevo;
+		}else{
+			(*pTail)->pSig = pNuevo;
+		}
+		
+		*pTail = pNuevo;
+ 	}else{
+ 		printf("%c no fue insertado, no hay memoria disponible",nom);
+ 	}
+}
+//Funcion dequeue--------------------------------
+char *dequeue(pColaNodo *pHead, pColaNodo *pTail) {
+	char nom =  (*pHead)-> nombre;
+	pColaNodo pTemp = *pHead;
+	*pHead = (*pHead)->pSig;
+	
+	if (*pHead == NULL){
+	 *pTail = NULL;
+	 
+    }free (pTemp);
+    return nom;
+}
+//Funcion cola vacia------------
+int vacio(pColaNodo pHead) {
+	return pHead == NULL;
+}
+//Funcion imprimir cola---------
+void mostrar (pColaNodo pActual) {
+	if (pActual == NULL){
+		puts("La cola esta vacia");
+		
+	}else{
+		puts("La cola es: \n");
+		while (pActual != NULL){
+			
+			printf("%s--> ", pActual->nombre);
+			pActual = pActual->pSig;
+		}
+		puts("FINAL");
+   }	
+}	
+/*-------------------------------------------------
+Paul & Harvey Deitel.(2022). C How to program
+ninth edition, 12.6 Queues. Pearson Education. USA.
+-------------------------------------------------*/
