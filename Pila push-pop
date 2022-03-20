@@ -1,0 +1,84 @@
+/*------------------------------------
+FCA UNAM Informatica
+Castro Avila Oscar Daniel, Grupo:8391
+Programacion (Estruct. de datos)-1361
+Asesor: Rodriguez Reynoso Jessica
+Unidad 2 Actividad de aprendizaje 1.
+--------------------------------------
+           STACK push - pop
+------------------------------------*/
+
+#include<stdio.h>
+#include<string.h>
+#include<stdlib.h>
+#define max 4 //Esta constante nos permitira almacenar un maximo de 4 cadenas.
+
+int push (char pila [max][30], int *tope, char dato[30]) {  //Declaramos la funcion push con la variable tipo puntero.
+	
+	if (*tope == max -1){
+	return (-1);//La función retornará valor -1 si la pila ya esta llena.
+	}
+	else{
+	    *tope = *tope +1;
+	    strcpy (pila[*tope],dato);
+		return (1);//En cambio si esta vacia, copiara la cadena y regresara el valor 1.
+	}		
+}int pop (char pila[max][30], int *tope, char dato[30]){//Aqui se declara la función pop de nuevo con el puntero.
+	
+	if (*tope == -1)//Se usa la misma dinámica de la función aterior para regresar los valores.
+	return (-1);
+	
+	else
+	{	
+		strcpy (dato, pila [*tope]);
+		*tope = *tope -1;
+		return(1);	//Esta función se ejecutará cuando retorne 1 y la pila tenga al menos una cadena.	
+	}	
+}int main(){//Función principal con las variables y el menu de funciones con la estructura switch.
+
+char pila[max][30], nom[30];
+int tope, op, resp;
+tope = -1;
+printf("\t  FUNCIONES\n\n"
+       "\t| 1. PUSH   |\n"
+       "\t| 2. POP    |\n"
+       "\t| 3. SALIR  |\n");
+
+while (1){
+	
+printf("\nEscoge la funcion: ");scanf ("%i",&op);//Esta impresión se repetira con el while hasta que se digite la opción 3.
+
+switch (op){//Declaramos esta estructura de control ya que tenemos 3 funciones.
+	
+	case 1:
+		printf("\nIngresa un nombre: ");
+		scanf("%s",nom);
+		
+	resp = push(pila,&tope,nom);//Usamos la variable "respuesta" para almacenar el valor que nos regresa la función.
+	if(resp == -1){
+	printf("\nLa Pila esta llena\n");//Cuando intentemos ingresar el 5° nombre nos indicara que la pila esta llena y no lo almacenará.
+	}else{
+	printf(" '%s' ingresado.\n \n ",nom);//Se ingresará la cadena solo cuando la función retorne 1 indicando que hay espacio.
+	}
+	break;
+	
+	case 2:
+	resp = pop(pila,&tope,nom);//Es esta función se aplica la misma dinámica de la función push usando la variable "respuesta".
+	if (resp == -1)
+    printf("\n La pila esta vacia\n");
+    else
+    printf(" '%s' fue extraido.\n\n",nom);//De igual manera se ejecutara la función cuando la pila contenga al menos una cadena.
+    break;
+    
+    case 3 :
+    	exit (0);//El caso 3 simplemente lo usamos para salir del bucle while y terminar el programa.
+    	default:
+    		printf("Funcion invalida\n");}
+   }
+return 0;
+}
+/*----------------------------------------------------------
+Referencia: Ulka Patil.(2020) 
+Implementation of C Program to push and pop string in stack.
+https://youtu.be/Uuwn7GpISGc
+-----------------------------------------------------------*/
