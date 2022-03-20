@@ -4,9 +4,9 @@ Castro Avila Oscar Daniel, Grupo:8391
 Programacion (Estruct. de datos)-1361
 Asesor: Rodriguez Reynoso Jessica
 Unidad 2 Actividad de aprendizaje 1.
+---------------------------------------
+      COLA enqueue - dequeue
 -------------------------------------*/
-//QUEUE enqueue, dequeue
-
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
